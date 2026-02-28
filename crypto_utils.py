@@ -25,7 +25,7 @@ def decrypt_file(enc_file_path, password):
 
     decrypted = fernet.decrypt(encrypted_data)
 
-    output_file = enc_file_path.replace(".enc", ".dec")
+    output_file = enc_file_path.rsplit(".enc", 1)[0] + ".dec"
 
     with open(output_file, "wb") as f:
         f.write(decrypted)
