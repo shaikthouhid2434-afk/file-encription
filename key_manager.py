@@ -31,7 +31,7 @@ def generate_key(password):
     with open(KEY_PATH, "wb") as f:
         f.write(secret)
 
-    print("✅ Encrypted master key saved.")
+    print("Encrypted master key saved.")
 
 def load_key(password):
     if not os.path.exists(KEY_PATH):

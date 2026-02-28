@@ -13,7 +13,7 @@ def encrypt_file(file_path, password):
     with open(file_path + ".enc", "wb") as f:
         f.write(encrypted)
 
-    print("🔐 File encrypted:", file_path + ".enc")
+    print("File encrypted:", file_path + ".enc")
 
 
 def decrypt_file(enc_file_path, password):
@@ -30,4 +30,4 @@ def decrypt_file(enc_file_path, password):
     with open(output_file, "wb") as f:
         f.write(decrypted)
 
-    print("🔓 File decrypted:", output_file)
+    print("File decrypted:", output_file)
