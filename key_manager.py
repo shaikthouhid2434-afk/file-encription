@@ -1,12 +1,27 @@
 from cryptography.fernet import Fernet
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+from cryptography.hazmat.backends import default_backend
 import os
 import base64
-import hashlib
 
 KEY_PATH = "keys/master.key"
 
 def _derive_key_from_password(password: str):
-    return base64.urlsafe_b64encode(hashlib.sha256(password.encode()).digest())
+    if not password:
+        raise ValueError("Password cannot be empty")
+    
+    # Use PBKDF2HMAC for secure key derivation with salt
+    salt = b"file_encryption_salt"  # In production, use a random salt stored with the key
+    kdf = PBKDF2HMAC(
+        algorithm=hashes.SHA256(),
+        length=32,
+        salt=salt,
+        iterations=100000,
+        backend=default_backend()
+    )
+    derived_key = kdf.derive(password.encode())
+    return base64.urlsafe_b64encode(derived_key)
 
 def generate_key(password):
     key = Fernet.generate_key()
